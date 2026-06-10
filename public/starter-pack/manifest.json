@@ -1,0 +1,14 @@
+{
+  "name": "Catacombs",
+  "description": "Built-in starter tiles",
+  "starter": true,
+  "tiles": [
+    { "file": "катакомбы_коридор.png", "type": "STRAIGHT",   "openings": 5 },
+    { "file": "катакомбы_Г.png",       "type": "CORNER",     "openings": 3 },
+    { "file": "катакомбы_T.png",       "type": "T_JUNCTION", "openings": 7 },
+    { "file": "катакомбы_X.png",       "type": "CROSSROADS", "openings": 15 },
+    { "file": "катакомбы_dead_end.png","type": "DEAD_END",   "openings": 4 },
+    { "file": "катакомбы_enter.png",   "type": "ENTRANCE",   "openings": 4 },
+    { "file": "катакомбы_exit.png",    "type": "EXIT",       "openings": 4 }
+  ]
+}

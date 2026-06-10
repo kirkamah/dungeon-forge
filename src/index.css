@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Темы оформления. Каналы RGB (через пробел) — чтобы работали и сплошные
+   цвета, и Tailwind-модификаторы прозрачности (например text-forge-gold/60). ── */
+:root, :root[data-theme="dark"] {
+  --forge-bg: 14 14 26;
+  --forge-panel: 22 33 62;
+  --forge-panel2: 26 26 46;
+  --forge-border: 42 42 74;
+  --forge-gold: 226 176 74;
+  --forge-gold-dim: 168 127 46;
+  --forge-blood: 139 0 0;
+  --forge-parchment: 216 199 154;
+  --forge-ink: 232 224 200;
+  --forge-onaccent: 26 26 46;
+}
+:root[data-theme="light"] {
+  --forge-bg: 230 223 205;
+  --forge-panel: 245 239 224;
+  --forge-panel2: 238 231 213;
+  --forge-border: 199 186 158;
+  --forge-gold: 161 118 31;
+  --forge-gold-dim: 120 88 22;
+  --forge-blood: 150 35 35;
+  --forge-parchment: 92 80 56;
+  --forge-ink: 38 32 22;
+  --forge-onaccent: 250 245 234;
+}
+:root[data-theme="space"] {
+  --forge-bg: 8 8 24;
+  --forge-panel: 20 18 48;
+  --forge-panel2: 14 12 36;
+  --forge-border: 48 42 92;
+  --forge-gold: 168 119 255;
+  --forge-gold-dim: 120 86 200;
+  --forge-blood: 200 60 120;
+  --forge-parchment: 180 174 220;
+  --forge-ink: 232 228 255;
+  --forge-onaccent: 14 12 36;
+}
+:root[data-theme="acid"] {
+  --forge-bg: 10 16 10;
+  --forge-panel: 16 26 16;
+  --forge-panel2: 12 20 12;
+  --forge-border: 34 56 34;
+  --forge-gold: 140 240 60;
+  --forge-gold-dim: 100 180 40;
+  --forge-blood: 200 60 40;
+  --forge-parchment: 170 200 150;
+  --forge-ink: 220 240 200;
+  --forge-onaccent: 8 18 6;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  background: rgb(var(--forge-bg));
+  color: rgb(var(--forge-ink));
+  font-family: 'Cinzel', Georgia, serif;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input, textarea, [contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+img {
+  -webkit-user-drag: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--forge-panel));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--forge-border));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--forge-gold));
+}
+
+input[type="range"] {
+  accent-color: rgb(var(--forge-gold));
+}
+
+/* Бренд-зелёный «no harm org»: на светлой теме затемняем для контраста. */
+.about-credit { color: #2fa37c; }
+:root[data-theme="light"] .about-credit { color: #146b4d; }
+
+/* Шапка служит кастомной строкой заголовка окна (перетаскивание). */
+.app-titlebar { -webkit-app-region: drag; }
+.app-titlebar button,
+.app-titlebar input,
+.app-titlebar select,
+.app-titlebar a { -webkit-app-region: no-drag; }
+
+@layer components {
+  .btn-gold {
+    @apply bg-forge-gold text-forge-onAccent font-bold uppercase tracking-wider px-4 py-2 rounded shadow-gold hover:brightness-110 transition active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+  .btn-ghost {
+    @apply bg-transparent border border-forge-border text-forge-ink px-3 py-1.5 rounded hover:border-forge-gold hover:text-forge-gold transition;
+  }
+  .btn-danger {
+    @apply bg-forge-blood text-forge-ink px-2 py-1 rounded hover:bg-red-700 transition text-xs;
+  }
+  .panel {
+    @apply bg-forge-panel2 border border-forge-border rounded-lg;
+  }
+  .panel-header {
+    @apply font-medieval text-forge-gold text-lg px-3 py-2 border-b border-forge-border tracking-wide;
+  }
+  .input {
+    @apply bg-forge-bg border border-forge-border rounded px-2 py-1 text-forge-ink focus:outline-none focus:border-forge-gold;
+  }
+  .label {
+    @apply text-xs uppercase tracking-wider text-forge-parchment/80;
+  }
+  .chip {
+    @apply text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-forge-panel border border-forge-border text-forge-parchment;
+  }
+}

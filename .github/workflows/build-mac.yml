@@ -1,0 +1,47 @@
+name: Build macOS app
+
+# Builds an UNSIGNED universal (Intel + Apple Silicon) macOS .app of Dungeon
+# Forge on a cloud macOS runner and publishes the .zip to this repo's "mac"
+# release. No Apple Developer certificate: the app is ad-hoc signed (see
+# scripts/afterPack.cjs) so it launches; the recipient clears Gatekeeper once
+# via right-click → Open. No native modules here, so one universal build serves
+# both CPUs.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build-mac:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build universal macOS app
+        run: |
+          npm run build
+          npx electron-builder --mac --universal --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+
+      - name: Publish to "mac" release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: mac
+          name: macOS build
+          body: Unsigned universal macOS build. First launch: right-click the app → Open.
+          files: release/DungeonForge-mac.zip
+          fail_on_unmatched_files: true
