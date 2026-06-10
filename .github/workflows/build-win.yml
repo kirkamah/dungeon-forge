@@ -1,0 +1,40 @@
+name: Build Windows trial
+
+# Builds the limited TRIAL Windows installer (VITE_TRIAL=1) on a Windows runner
+# and publishes it to this repo's "win" release. The site links here so the
+# download matches the Boosty trial/full model.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build-win:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build trial installer
+        run: npm run dist:trial
+
+      - name: Publish to "win" release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: win
+          name: Windows trial build
+          body: 'Windows trial installer (limited — full version on Boosty).'
+          files: release/DungeonForge-Trial-Setup.exe
+          fail_on_unmatched_files: true
