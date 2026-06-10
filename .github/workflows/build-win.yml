@@ -33,7 +33,10 @@ jobs:
           VITE_TRIAL: '1'
         run: |
           npx vite build
-          npx electron-builder --win nsis -c.nsis.artifactName=DungeonForge-Trial-Setup.exe --publish never
+          npx electron-builder --win nsis --publish never
+          $exe = Get-ChildItem release -Filter *.exe | Select-Object -First 1
+          Move-Item $exe.FullName release/DungeonForge-Trial-Setup.exe -Force
+          Get-ChildItem release/*.exe | ForEach-Object { $_.Name }
 
       - name: Publish to "win" release
         uses: softprops/action-gh-release@v2
