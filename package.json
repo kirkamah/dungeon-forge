@@ -49,9 +49,9 @@
       "minimumSystemVersion": "11.0",
       "identity": null,
       "target": [
-        { "target": "zip", "arch": "universal" }
+        { "target": "zip", "arch": ["x64", "arm64"] }
       ],
-      "artifactName": "DungeonForge-mac.${ext}"
+      "artifactName": "DungeonForge-mac-${arch}.${ext}"
     }
   },
   "dependencies": {
