@@ -28,7 +28,12 @@ jobs:
         run: npm install
 
       - name: Build trial installer
-        run: npm run dist:trial
+        shell: pwsh
+        env:
+          VITE_TRIAL: '1'
+        run: |
+          npx vite build
+          npx electron-builder --win nsis -c.nsis.artifactName=DungeonForge-Trial-Setup.exe --publish never
 
       - name: Publish to "win" release
         uses: softprops/action-gh-release@v2
